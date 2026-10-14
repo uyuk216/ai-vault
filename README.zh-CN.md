@@ -220,6 +220,10 @@ go build -trimpath -ldflags='-s -w' -o aivault ./cmd/aivault
 
 离线测试安装器时，可以将 `AIVAULT_TEST_RELEASE_DIR` 设置为包含发行文件和 `SHA256SUMS` 的**本地绝对目录**，同时必须显式指定版本。不接受镜像 URL。请使用临时安装和笔记目录；测试 auto-connect 时，通过 `PATH` 中的 `codex` 和 `claude` 桩程序避免修改真实客户端配置。
 
+## Windows 应用程序控制策略
+
+发布的二进制文件未签名。如果 Windows 设备的应用程序控制策略要求受信任的发布者签名，AI Vault 可能会被阻止。这类设备需要符合其策略的签名。安装程序不会更改 Windows 安全设置。Windows CI 会在允许这些二进制文件的环境中验证运行与安装。
+
 ## 许可证
 
 [MIT](LICENSE)。依赖代码保留其原始许可证，详见[第三方声明](THIRD_PARTY_NOTICES.md)。AI Vault 是独立项目，与 Obsidian、OpenAI、Anthropic 无隶属关系。

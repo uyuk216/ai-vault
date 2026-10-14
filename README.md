@@ -221,6 +221,10 @@ Release assets are named `aivault_VERSION_OS_ARCH.tar.gz` (`.zip` on Windows), w
 
 For offline installer tests, `AIVAULT_TEST_RELEASE_DIR` may point to an **absolute local directory** containing those release assets and `SHA256SUMS`; an explicit version is required. It does not accept a mirror URL. Use a temporary install/vault directory, and stub `codex` and `claude` through `PATH` when testing auto-connect so real client settings are untouched.
 
+## Windows application-control policies
+
+Release binaries are unsigned. Windows devices whose application-control policy requires a trusted publisher signature can block AI Vault. Such devices need a signature accepted by their policy; the installer does not change Windows security settings. Native Windows CI verifies execution and installation in an environment that permits these binaries.
+
 ## License
 
 [MIT](LICENSE). Dependencies retain their original licenses; see [third-party notices](THIRD_PARTY_NOTICES.md). AI Vault is independent of Obsidian, OpenAI, and Anthropic.

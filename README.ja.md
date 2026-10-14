@@ -220,6 +220,10 @@ go build -trimpath -ldflags='-s -w' -o aivault ./cmd/aivault
 
 オフラインのインストーラーテストでは、配布ファイルと `SHA256SUMS` を置いた**絶対パスのローカルディレクトリ**を `AIVAULT_TEST_RELEASE_DIR` に指定できます。明示的なバージョン指定が必要で、ミラーURLは使えません。導入先と保存先は一時ディレクトリにし、auto-connectのテストでは `PATH` 上の `codex` と `claude` をスタブに置き換えて、実際の設定への書込を避けてください。
 
+## Windowsの実行制御
+
+配布バイナリは未署名です。信頼された発行者の署名を必須とするWindowsの実行制御が有効な端末では、AI Vaultがブロックされる場合があります。その端末のポリシーが認める署名が必要です。インストーラーはWindowsのセキュリティ設定を変更しません。WindowsのCIでは、これらのバイナリを許可する環境で実行とインストールを検証しています。
+
 ## ライセンス
 
 [MIT](LICENSE)。依存コードには元のライセンスが適用されます。[第三者のライセンス情報](THIRD_PARTY_NOTICES.md)も参照してください。AI VaultはObsidian、OpenAI、Anthropicとは独立したプロジェクトです。

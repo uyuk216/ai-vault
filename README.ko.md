@@ -220,6 +220,10 @@ go build -trimpath -ldflags='-s -w' -o aivault ./cmd/aivault
 
 오프라인 설치 테스트에서는 해당 릴리스 파일들과 `SHA256SUMS`가 있는 **로컬 디렉터리의 절대 경로**를 `AIVAULT_TEST_RELEASE_DIR`에 지정할 수 있습니다. 이때 버전을 명시해야 합니다. 미러 URL은 사용할 수 없습니다. 임시 설치 및 저장소 디렉터리를 사용하고, 자동 연결 테스트에서는 실제 클라이언트 설정이 바뀌지 않도록 `PATH`의 `codex`와 `claude`를 테스트용 대체 명령으로 바꾸세요.
 
+## Windows 애플리케이션 제어 정책
+
+배포 바이너리는 서명되지 않았습니다. 신뢰할 수 있는 게시자의 서명을 요구하는 Windows 애플리케이션 제어 정책은 AI Vault를 차단할 수 있습니다. 이런 장치에는 해당 정책이 허용하는 서명이 필요합니다. 설치 프로그램은 Windows 보안 설정을 변경하지 않습니다. Windows CI에서는 이 바이너리를 허용하는 환경에서 실행과 설치를 검증합니다.
+
 ## 라이선스
 
 [MIT](LICENSE). 의존성에는 각각의 원래 라이선스가 적용됩니다. [타사 고지](THIRD_PARTY_NOTICES.md)를 참조하세요. AI Vault는 Obsidian, OpenAI, Anthropic과 독립된 프로젝트입니다.
