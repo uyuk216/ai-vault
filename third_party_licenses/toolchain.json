@@ -1,0 +1,7 @@
+{
+  "name": "Go",
+  "version": "go1.27.2",
+  "release": "v0.1.0",
+  "ci_version_policy": "latest Go 1.27 patch release",
+  "notice_directory": "go@go1.27.2"
+}

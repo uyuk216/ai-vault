@@ -1,0 +1,111 @@
+name: Test and release
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Test on ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.27.x'
+          check-latest: true
+          cache: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Test
+        run: go test ./...
+      - name: Vet
+        run: go vet ./...
+      - name: Race detector (64-bit Unix)
+        if: runner.os != 'Windows'
+        run: go test -race ./...
+      - name: Native installer smoke test
+        run: python scripts/test-installers.py
+
+  build:
+    name: Build six portable binaries
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.27.x'
+          check-latest: true
+          cache: true
+      - name: Cross-compile and package
+        shell: bash
+        env:
+          CGO_ENABLED: '0'
+        run: |
+          set -euo pipefail
+          version="dev-${GITHUB_SHA:0:12}"
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+            version="${GITHUB_REF_NAME#v}"
+          fi
+          if [[ ! "$version" =~ ^[A-Za-z0-9][A-Za-z0-9._-]*$ ]]; then
+            echo "Invalid release version" >&2
+            exit 1
+          fi
+          mkdir -p release
+          for target_os in darwin linux windows; do
+            for target_arch in amd64 arm64; do
+              staging="$(mktemp -d)"
+              executable=aivault
+              if [[ "$target_os" == windows ]]; then executable=aivault.exe; fi
+              GOOS="$target_os" GOARCH="$target_arch" go build -trimpath -ldflags="-s -w -X main.version=$version" -o "$staging/$executable" ./cmd/aivault
+              cp LICENSE "$staging/LICENSE"
+              cp README*.md "$staging/"
+              cp THIRD_PARTY_NOTICES.md "$staging/THIRD_PARTY_NOTICES.md"
+              cp -R third_party_licenses "$staging/third_party_licenses"
+              asset="aivault_${version}_${target_os}_${target_arch}"
+              if [[ "$target_os" == windows ]]; then
+                (cd "$staging" && zip -qr "$GITHUB_WORKSPACE/release/$asset.zip" "$executable" LICENSE README*.md THIRD_PARTY_NOTICES.md third_party_licenses)
+              else
+                (cd "$staging" && tar -czf "$GITHUB_WORKSPACE/release/$asset.tar.gz" "$executable" LICENSE README*.md THIRD_PARTY_NOTICES.md third_party_licenses)
+              fi
+              rm -rf "$staging"
+            done
+          done
+          (cd release && sha256sum *.tar.gz *.zip > SHA256SUMS)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: aivault-release
+          path: release/*
+          if-no-files-found: error
+          retention-days: 7
+
+  release:
+    name: Publish tagged release
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [test, build]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: aivault-release
+          path: release
+      - name: Verify packaged checksums
+        run: cd release && sha256sum --check SHA256SUMS
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" --verify-tag --title "AI Vault $GITHUB_REF_NAME" --generate-notes release/*

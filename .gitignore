@@ -1,0 +1,11 @@
+/dist/
+/aivault
+/aivault.exe
+/.aivault/
+/AI-Vault/
+/vault/
+*.test
+*.out
+.DS_Store
+__pycache__/
+*.pyc
