@@ -35,7 +35,7 @@ READMEとインストーラーを先に読み、OSとCPUに合うリリースを
 `curl`、`tar`、SHA-256ツールのいずれか（`sha256sum`、`shasum`、`openssl`）が必要です。macOSと一般的なLinux環境には通常含まれています。
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/uyuk216/ai-vault/v0.1.0/install.sh | sh -s -- --version v0.1.0 --auto-connect
+curl -fsSL https://raw.githubusercontent.com/uyuk216/ai-vault/v0.1.1/install.sh | sh -s -- --version v0.1.1 --auto-connect
 ```
 
 実行ファイルは `~/.local/bin/aivault`、ノートは `~/AI-Vault` に保存します。管理者権限は不要です。`~/.local/bin/aivault` を直接実行するか、`~/.local/bin` をシェルの `PATH` に追加してください。
@@ -45,7 +45,7 @@ curl -fsSL https://raw.githubusercontent.com/uyuk216/ai-vault/v0.1.0/install.sh 
 Windows PowerShell 5.1またはPowerShell 7で、通常のユーザーとして実行します。
 
 ```powershell
-& ([scriptblock]::Create((Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/uyuk216/ai-vault/v0.1.0/install.ps1').Content)) -Version v0.1.0 -AutoConnect
+& ([scriptblock]::Create((Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/uyuk216/ai-vault/v0.1.1/install.ps1').Content)) -Version v0.1.1 -AutoConnect
 ```
 
 実行ファイルは `%LOCALAPPDATA%\AI-Vault\bin\aivault.exe`、ノートは `%USERPROFILE%\AI-Vault` に保存します。表示された実行ファイルのパスを使うか、そのディレクトリをユーザーの `PATH` に追加してください。
@@ -55,11 +55,11 @@ Windows PowerShell 5.1またはPowerShell 7で、通常のユーザーとして�
 ### 保存先とバージョンを指定する
 
 ```sh
-sh install.sh --version v0.1.0 --install-dir "$HOME/.local/bin" --vault "$HOME/AI-Vault" --auto-connect
+sh install.sh --version v0.1.1 --install-dir "$HOME/.local/bin" --vault "$HOME/AI-Vault" --auto-connect
 ```
 
 ```powershell
-.\install.ps1 -Version v0.1.0 -InstallDir "$env:LOCALAPPDATA\AI-Vault\bin" -Vault "$env:USERPROFILE\AI-Vault" -AutoConnect
+.\install.ps1 -Version v0.1.1 -InstallDir "$env:LOCALAPPDATA\AI-Vault\bin" -Vault "$env:USERPROFILE\AI-Vault" -AutoConnect
 ```
 
 環境変数 `AIVAULT_VERSION`、`AIVAULT_INSTALL_DIR`、`AIVAULT_HOME` でも指定できます。保存したインストーラーをバージョン指定なしで実行すると、最新のGitHub Releaseを一度確認し、そのタグで実行ファイルとチェックサムを取得します。`--auto-connect` / `-AutoConnect` を省略すると、クライアントに登録せず、導入と設定の表示だけを行います。

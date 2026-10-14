@@ -35,7 +35,7 @@
 需要 `curl`、`tar`，以及一种 SHA-256 工具（`sha256sum`、`shasum` 或 `openssl`）。macOS 和常见 Linux 环境通常已包含这些工具。
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/uyuk216/ai-vault/v0.1.0/install.sh | sh -s -- --version v0.1.0 --auto-connect
+curl -fsSL https://raw.githubusercontent.com/uyuk216/ai-vault/v0.1.1/install.sh | sh -s -- --version v0.1.1 --auto-connect
 ```
 
 程序安装到 `~/.local/bin/aivault`，笔记保存在 `~/AI-Vault`，无需管理员权限。可以直接运行 `~/.local/bin/aivault`，也可以将 `~/.local/bin` 加入 shell 的 `PATH`。
@@ -45,7 +45,7 @@ curl -fsSL https://raw.githubusercontent.com/uyuk216/ai-vault/v0.1.0/install.sh 
 需要 Windows PowerShell 5.1 或 PowerShell 7。使用普通用户权限运行：
 
 ```powershell
-& ([scriptblock]::Create((Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/uyuk216/ai-vault/v0.1.0/install.ps1').Content)) -Version v0.1.0 -AutoConnect
+& ([scriptblock]::Create((Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/uyuk216/ai-vault/v0.1.1/install.ps1').Content)) -Version v0.1.1 -AutoConnect
 ```
 
 程序安装到 `%LOCALAPPDATA%\AI-Vault\bin\aivault.exe`，笔记保存在 `%USERPROFILE%\AI-Vault`。使用安装器输出的程序路径，或将对应目录加入用户 `PATH`。
@@ -55,11 +55,11 @@ curl -fsSL https://raw.githubusercontent.com/uyuk216/ai-vault/v0.1.0/install.sh 
 ### 指定版本和目录
 
 ```sh
-sh install.sh --version v0.1.0 --install-dir "$HOME/.local/bin" --vault "$HOME/AI-Vault" --auto-connect
+sh install.sh --version v0.1.1 --install-dir "$HOME/.local/bin" --vault "$HOME/AI-Vault" --auto-connect
 ```
 
 ```powershell
-.\install.ps1 -Version v0.1.0 -InstallDir "$env:LOCALAPPDATA\AI-Vault\bin" -Vault "$env:USERPROFILE\AI-Vault" -AutoConnect
+.\install.ps1 -Version v0.1.1 -InstallDir "$env:LOCALAPPDATA\AI-Vault\bin" -Vault "$env:USERPROFILE\AI-Vault" -AutoConnect
 ```
 
 也可以使用环境变量 `AIVAULT_VERSION`、`AIVAULT_INSTALL_DIR` 和 `AIVAULT_HOME`。运行已保存的安装器时，若未指定版本，它会查询一次最新 GitHub Release，再使用该标签下载程序和校验和。省略 `--auto-connect` / `-AutoConnect` 时，只安装程序并输出配置，不会注册客户端。

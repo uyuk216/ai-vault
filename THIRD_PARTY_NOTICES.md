@@ -24,7 +24,7 @@ The files linked below are unmodified copies from the exact module versions sele
 
 ## Go runtime and standard library
 
-Release executables include Go runtime and standard library code. The initial v0.1.0 release is built with Go 1.27.2. Its original [LICENSE](third_party_licenses/go@go1.27.2/LICENSE) and [PATENTS](third_party_licenses/go@go1.27.2/PATENTS) are included. CI tracks the latest Go 1.27 patch release; refresh these notices and the [toolchain provenance](third_party_licenses/toolchain.json) when the build toolchain changes.
+Release executables include Go runtime and standard library code. The initial v0.1.1 release is built with Go 1.27.2. Its original [LICENSE](third_party_licenses/go@go1.27.2/LICENSE) and [PATENTS](third_party_licenses/go@go1.27.2/PATENTS) are included. CI tracks the latest Go 1.27 patch release; refresh these notices and the [toolchain provenance](third_party_licenses/toolchain.json) when the build toolchain changes.
 
 ## Distribution
 

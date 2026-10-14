@@ -140,21 +140,14 @@ def main() -> None:
         install_dir = directory / "Install directory with spaces"
         binary = install_dir / name
         vault = directory / "Shared vault with spaces"
-        home = directory / "Isolated home"
-        home.mkdir()
         env = os.environ.copy()
-        for key in ("GOOS", "GOARCH", "AIVAULT_VERSION", "AIVAULT_INSTALL_DIR", "AIVAULT_HOME", "CODEX_HOME", "CLAUDE_CONFIG_DIR"):
+        for key in ("GOOS", "GOARCH", "AIVAULT_VERSION", "AIVAULT_INSTALL_DIR", "AIVAULT_HOME"):
             env.pop(key, None)
         env.update({"CGO_ENABLED": "0", "PYTHONUTF8": "1"})
-        # Build before isolating HOME so normal pre-populated Go caches still work.
+        # Preserve system/user environment; PATH stubs isolate client changes.
         run([arguments.go, "build", "-trimpath", f"-ldflags=-s -w -X main.version={VERSION}", "-o", built_binary, "./cmd/aivault"], env)
         asset = make_release(fixture, built_binary, target_os, target_arch)
         env.update({
-            "HOME": str(home), "USERPROFILE": str(home),
-            "APPDATA": str(home / "AppData" / "Roaming"),
-            "LOCALAPPDATA": str(home / "AppData" / "Local"),
-            "CODEX_HOME": str(home / ".codex"),
-            "CLAUDE_CONFIG_DIR": str(home / ".claude"),
             "AIVAULT_TEST_RELEASE_DIR": str(fixture),
         })
         log = client_stubs(directory, env, binary, vault)

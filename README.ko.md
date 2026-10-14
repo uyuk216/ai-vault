@@ -35,7 +35,7 @@ CLI와 MCP 도구에서 노트 목록 조회, 작은 테스트 노트 생성, �
 `curl`, `tar`, SHA-256 도구 하나(`sha256sum`, `shasum`, `openssl` 중 하나)가 필요합니다. 일반적인 macOS와 Linux 설치 환경에는 보통 이미 포함되어 있습니다.
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/uyuk216/ai-vault/v0.1.0/install.sh | sh -s -- --version v0.1.0 --auto-connect
+curl -fsSL https://raw.githubusercontent.com/uyuk216/ai-vault/v0.1.1/install.sh | sh -s -- --version v0.1.1 --auto-connect
 ```
 
 실행 파일은 `~/.local/bin/aivault`에, 노트는 `~/AI-Vault`에 저장됩니다. 관리자 권한은 필요하지 않습니다. `~/.local/bin/aivault`를 직접 실행하거나 셸의 `PATH`에 `~/.local/bin`을 추가하세요.
@@ -45,7 +45,7 @@ curl -fsSL https://raw.githubusercontent.com/uyuk216/ai-vault/v0.1.0/install.sh 
 Windows PowerShell 5.1 또는 PowerShell 7이 필요합니다. 일반 사용자 계정으로 실행하세요.
 
 ```powershell
-& ([scriptblock]::Create((Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/uyuk216/ai-vault/v0.1.0/install.ps1').Content)) -Version v0.1.0 -AutoConnect
+& ([scriptblock]::Create((Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/uyuk216/ai-vault/v0.1.1/install.ps1').Content)) -Version v0.1.1 -AutoConnect
 ```
 
 실행 파일은 `%LOCALAPPDATA%\AI-Vault\bin\aivault.exe`에, 노트는 `%USERPROFILE%\AI-Vault`에 저장됩니다. 출력된 실행 파일 경로를 사용하거나 해당 디렉터리를 사용자 `PATH`에 추가하세요.
@@ -55,11 +55,11 @@ Windows PowerShell 5.1 또는 PowerShell 7이 필요합니다. 일반 사용자 
 ### 설치 옵션
 
 ```sh
-sh install.sh --version v0.1.0 --install-dir "$HOME/.local/bin" --vault "$HOME/AI-Vault" --auto-connect
+sh install.sh --version v0.1.1 --install-dir "$HOME/.local/bin" --vault "$HOME/AI-Vault" --auto-connect
 ```
 
 ```powershell
-.\install.ps1 -Version v0.1.0 -InstallDir "$env:LOCALAPPDATA\AI-Vault\bin" -Vault "$env:USERPROFILE\AI-Vault" -AutoConnect
+.\install.ps1 -Version v0.1.1 -InstallDir "$env:LOCALAPPDATA\AI-Vault\bin" -Vault "$env:USERPROFILE\AI-Vault" -AutoConnect
 ```
 
 `AIVAULT_VERSION`, `AIVAULT_INSTALL_DIR`, `AIVAULT_HOME` 환경 변수로도 같은 기본값을 지정할 수 있습니다. 버전을 생략하고 저장한 설치 스크립트를 실행하면 최신 GitHub Release를 한 번 확인한 뒤, 두 다운로드에 모두 그 태그를 사용합니다. `--auto-connect` / `-AutoConnect`를 생략하면 클라이언트를 등록하지 않고 설치와 설정 출력만 수행합니다.

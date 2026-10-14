@@ -57,7 +57,12 @@ try {
     })
     if ($checksumLines.Count -ne 1) { throw 'Release checksum entry missing, invalid, or duplicated.' }
     $expected = ($checksumLines[0] -split '\s+')[0]
-    $actual = (Get-FileHash -LiteralPath (Join-Path $temporaryDirectory $asset) -Algorithm SHA256).Hash
+    # Use the framework directly so integrity checks do not depend on module
+    # auto-loading when an AI launches Windows PowerShell from another shell.
+    $hasher = [Security.Cryptography.SHA256]::Create()
+    $stream = [IO.File]::OpenRead((Join-Path $temporaryDirectory $asset))
+    try { $actual = [BitConverter]::ToString($hasher.ComputeHash($stream)).Replace('-', '') }
+    finally { $stream.Dispose(); $hasher.Dispose() }
     if ($actual -ne $expected) { throw 'SHA-256 mismatch. Nothing was installed.' }
     # Read just the expected regular binary; never unpack arbitrary archive paths.
     Add-Type -AssemblyName System.IO.Compression.FileSystem

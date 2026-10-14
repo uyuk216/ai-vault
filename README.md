@@ -36,7 +36,7 @@ Prebuilt releases support **Windows / Linux / macOS × x86-64 / ARM64**. Linux n
 Requires `curl`, `tar`, and one SHA-256 tool (`sha256sum`, `shasum`, or `openssl`). These are normally already available on macOS and common Linux installations.
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/uyuk216/ai-vault/v0.1.0/install.sh | sh -s -- --version v0.1.0 --auto-connect
+curl -fsSL https://raw.githubusercontent.com/uyuk216/ai-vault/v0.1.1/install.sh | sh -s -- --version v0.1.1 --auto-connect
 ```
 
 Installs to `~/.local/bin/aivault`; notes go to `~/AI-Vault`. No administrator access is needed. Use `~/.local/bin/aivault` directly, or add `~/.local/bin` to your shell's `PATH`.
@@ -46,7 +46,7 @@ Installs to `~/.local/bin/aivault`; notes go to `~/AI-Vault`. No administrator a
 Requires Windows PowerShell 5.1 or PowerShell 7. Run as your ordinary user:
 
 ```powershell
-& ([scriptblock]::Create((Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/uyuk216/ai-vault/v0.1.0/install.ps1').Content)) -Version v0.1.0 -AutoConnect
+& ([scriptblock]::Create((Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/uyuk216/ai-vault/v0.1.1/install.ps1').Content)) -Version v0.1.1 -AutoConnect
 ```
 
 Installs to `%LOCALAPPDATA%\AI-Vault\bin\aivault.exe`; notes go to `%USERPROFILE%\AI-Vault`. Use the printed executable path, or add its directory to your user `PATH`.
@@ -56,11 +56,11 @@ The commands above run the tagged installer. To inspect it first, download `inst
 ### Installation options
 
 ```sh
-sh install.sh --version v0.1.0 --install-dir "$HOME/.local/bin" --vault "$HOME/AI-Vault" --auto-connect
+sh install.sh --version v0.1.1 --install-dir "$HOME/.local/bin" --vault "$HOME/AI-Vault" --auto-connect
 ```
 
 ```powershell
-.\install.ps1 -Version v0.1.0 -InstallDir "$env:LOCALAPPDATA\AI-Vault\bin" -Vault "$env:USERPROFILE\AI-Vault" -AutoConnect
+.\install.ps1 -Version v0.1.1 -InstallDir "$env:LOCALAPPDATA\AI-Vault\bin" -Vault "$env:USERPROFILE\AI-Vault" -AutoConnect
 ```
 
 `AIVAULT_VERSION`, `AIVAULT_INSTALL_DIR`, and `AIVAULT_HOME` provide the same defaults. Without a version, a saved installer resolves the latest GitHub Release once, then uses that tag for both downloads. Omit `--auto-connect` / `-AutoConnect` to install and print configuration without registering clients.
